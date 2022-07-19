@@ -37,8 +37,18 @@ export interface WalletInfo {
     final_rolls: number;
   };
   thread: number;
+
   final_balance_info: number | null;
   candidate_balance_info: number | null;
   final_datastore_keys: number[];
   candidate_datastore_keys: number[];
+  ledger_info: {
+    candidate_ledger_info: {
+      balance: string;
+    };
+    final_ledger_info: {
+      balance: string;
+    };
+    locked_balance: string;
+  };
 }

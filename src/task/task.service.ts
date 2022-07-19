@@ -5,6 +5,8 @@ import { MnaLogger } from '../common/mna-logger';
 import { Status } from './status';
 import { RpcResponse } from './rpc-response';
 import { WalletInfo } from './walletInfo';
+import { Data } from './data';
+import { DataMapper } from './data.mapper';
 
 @Injectable()
 export class TaskService {
@@ -31,10 +33,10 @@ export class TaskService {
 
   private async sync() {
     const data = await this.collectData();
-    this.eventsGateway.emit('event', data);
+    this.eventsGateway.emit('event', DataMapper.mapToEvent(data));
   }
 
-  private async collectData() {
+  private async collectData(): Promise<Data> {
     this.logger.debug('Collecting data...');
 
     const { data: statusResponse }: { data: RpcResponse<Status> } =
@@ -56,7 +58,7 @@ export class TaskService {
 
     return {
       status: statusResponse.result,
-      walletInfo: walletInfoResponse?.result,
+      walletInfo: walletInfoResponse?.result?.[0],
     };
   }
 }

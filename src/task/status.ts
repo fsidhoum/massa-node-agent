@@ -45,4 +45,5 @@ export interface Status {
     endorsement_count: number;
     operation_count: number;
   };
+  version: string;
 }
